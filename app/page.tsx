@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 
 export default function Home() {
@@ -7,6 +7,7 @@ export default function Home() {
   const scannerContainerRef = useRef(null);
 
   useEffect(() => {
+    if (!scannerContainerRef.current) return;
     const scanner = new Html5QrcodeScanner(
       scannerContainerRef.current,
       {
@@ -26,7 +27,7 @@ export default function Home() {
     function error(err: string) {
       console.warn(err);
     }
-  }, []);
+  }, [scannerContainerRef]);
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center  bg-blue-100 gap-4">
