@@ -4,13 +4,14 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 
 export default function Home() {
   const [scannedCode, setScannedCode] = useState<string | null>(null);
+  const scannerContainerRef = useRef(null);
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner(
-      "reader",
+      scannerContainerRef.current,
       {
         fps: 10,
-        qrbox: 500,
+        qrbox: 250,
       },
       false
     );
@@ -30,13 +31,12 @@ export default function Home() {
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center  bg-blue-100 gap-4">
       <div className="text-3xl ">QR Code Scanner</div>
-      <div id="reader"></div>
+      <div ref={scannerContainerRef}></div>
       {scannedCode ? (
         <div>Scanned Result: {scannedCode}</div>
       ) : (
         <div className="text-3xl">No result yet</div>
       )}
-      <div className="w-[600px] bg-blue-200"></div>
     </div>
   );
 }
